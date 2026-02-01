@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Let’s Celebrate! 🎂</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #ffd5ec, #ffecd2, #ffe3b3); /* pastel sunset */
+    font-family: 'Dancing Script', cursive;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  h1 {
+    color: #c2185b;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(255, 192, 203, 0.3);
+  }
+
+  .cake-wrapper {
+    position: relative;
+    width: 200px;
+    height: 260px;
+    margin-bottom: 2rem;
+    animation: float 2s infinite ease-in-out;
+  }
+
+  .cake-tier {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  }
+
+  .tier1 { bottom: 0; width: 200px; height: 70px; background: #fa2347; }
+  .tier2 { bottom: 70px; width: 140px; height: 60px; background: #f74583; }
+  .tier3 { bottom: 130px; width: 90px; height: 50px; background: #a84264; }
+
+  .candle {
+    position: absolute;
+    bottom: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 40px;
+    background: #940d01;
+    border-radius: 5px;
+  }
+
+  .flame {
+    position: absolute;
+    bottom: 222px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #fce302, #bd5902);
+    border-radius: 50%;
+    animation: flicker 0.4s infinite;
+    display: none;
+  }
+
+  @keyframes flicker {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
+    50% { transform: translateX(-50%) scale(1.2); opacity: 0.7; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -10px); }
+  }
+
+  .button-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.8rem 1.6rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #f48fb1, #ce93d8);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .btn:hover {
+    transform: scale(1.05);
+  }
+
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    animation: fall 3s linear infinite;
+    opacity: 0.8;
+    z-index: 999;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-100px) rotate(0); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cake-wrapper {
+      transform: scale(0.8);
+    }
+
+    .btn {
+      font-size: 1rem;
+      padding: 0.6rem 1.2rem;
+    }
+
+    .button-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+  <h1>Here’s to Us! 🎉</h1>
+
+  <div class="cake-wrapper">
+    <div class="tier1 cake-tier"></div>
+    <div class="tier2 cake-tier"></div>
+    <div class="tier3 cake-tier"></div>
+    <div class="candle"></div>
+    <div class="flame" id="flame"></div>
+  </div>
+
+  <div class="button-row">
+    <button class="btn" onclick="lightCandle()">Light the Candle 🕯️</button>
+    <button class="btn" onclick="location.href='letter.html'">Next Page 💌</button>
+  </div>
+
+  <script>
+    function lightCandle() {
+      document.getElementById('flame').style.display = 'block';
+      createConfetti();
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.animationDuration = 2 + Math.random() * 2 + 's';
+        confetti.style.width = confetti.style.height = 6 + Math.random() * 6 + 'px';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 4000);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ['#ff4081', '#f48fb1', '#ffb74d', '#81d4fa', '#aed581', '#ba68c8'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+
+</body>
+</html>

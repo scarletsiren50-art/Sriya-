@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memory Lane ✨</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom right, #e0ffe0, #c8e6c9); /* pastel green */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    margin-top: 2rem;
+    font-size: 2.5rem;
+    color: #2e7d32;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .carousel {
+    margin: 2rem auto;
+    width: 95%;
+    max-width: 1000px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 1.5rem;
+  }
+
+  .carousel-item {
+    flex-shrink: 0;
+    width: 280px;
+    max-width: 90vw;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .carousel-item img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+  }
+
+  .caption {
+    padding: 1rem;
+    font-size: 1rem;
+    color: #33691e;
+    font-style: italic;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .nav button,
+  .next-page {
+    padding: 0.8rem 1.8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #a5d6a7, #81c784);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+    transition: 0.3s ease;
+  }
+
+  .next-page {
+    margin: 2rem auto;
+    display: block;
+  }
+
+  .nav button:hover,
+  .next-page:hover {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .caption {
+      font-size: 0.9rem;
+    }
+
+    .nav button,
+    .next-page {
+      font-size: 1rem;
+      padding: 0.6rem 1.2rem;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+  <h1>Mirror of Memories 📸</h1>
+
+  <div class="carousel">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+
+  <div class="nav">
+    <button onclick="prevSlide()">⬅ Prev</button>
+    <button onclick="nextSlide()">Next ➡</button>
+  </div>
+
+  <button class="next-page" onclick="location.href='cake.html'">Next Page 🍰</button>
+
+  <script>
+    const quotes = [
+      "A best friend is someone who makes your laughter a little louder and your life a little brighter.",
+      "True friendship isn’t about being inseparable — it’s about being separated and nothing changes.",
+      "Best friends are the siblings destiny forgot to give us.",
+      "You're my chosen family, not by blood, but by soul.",
+      "Friendship is the golden thread that ties the heart of all the world.",
+      "Good times + crazy friends = amazing memories.",
+      "In the cookie of life, you’re the chocolate chip.",
+      "We’ll be the old ladies causing trouble in the nursing home someday.",
+      "Friends make the good times better and the hard times easier.",
+      "Our friendship is like stars — you don’t always see it, but you know it’s always there.",
+      "You're the person I never knew I needed, but now I can’t imagine life without.",
+      "Thanks for being my therapist, comedian, and sister — all in one.",
+      "You’ve seen me at my worst and still love me more.",
+      "Side by side or miles apart, real friends are always close to heart.",
+      "I found my forever kind of person in you.",
+      "Friendship isn’t one big thing — it’s a million little things.",
+      "You’re not just my best friend — you’re my soul twin.",
+      "If I wrote down all the things I love about us, I’d never stop.",
+      "A best friend is someone who loves you when you forget to love yourself.",
+      "You’re the sparkle in my storm, the smile in my chaos.",
+      "You make my laugh louder, smile brighter, and heart lighter.",
+      "We didn’t realize we were making memories — we just knew we were having fun.",
+      "Best friends are people who make your problems their problems too.",
+      "Our laughs echo louder than our worries.",
+      "Some souls just understand each other upon meeting — that’s us.",
+      "You bring out the magic in ordinary days.",
+      "Through thick and thin, you’ve been my anchor.",
+      "You are the calm to my chaos, the peanut butter to my jelly.",
+      "You’re not my best friend — you’re my forever person.",
+      "If we were stars, we’d shine side by side — always.",
+      "You’re the proof that soulmates aren’t just for love stories."
+    ];
+
+    const track = document.getElementById('carouselTrack');
+    let currentIndex = 0;
+
+    function renderCarousel() {
+      track.innerHTML = '';
+      for (let i = 1; i <= 31; i++) {
+        const card = document.createElement('div');
+        card.className = 'carousel-item';
+        card.innerHTML = `
+          <img src="assets/images/pic${i}.jpg" alt="Memory ${i}">
+          <div class="caption">${quotes[i - 1]}</div>
+        `;
+        track.appendChild(card);
+      }
+      updateCarousel();
+    }
+
+    function updateCarousel() {
+      const offset = currentIndex * 320;
+      track.style.transform = `translateX(-${offset}px)`;
+    }
+
+    function nextSlide() {
+      if (currentIndex < 30) {
+        currentIndex++;
+        updateCarousel();
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    }
+
+    renderCarousel();
+  </script>
+
+</body>
+</html>
